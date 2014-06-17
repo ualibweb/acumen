@@ -146,6 +146,17 @@
                     </xsl:if>
                 </xsl:for-each>
 
+                <xsl:for-each select=".//mods:originInfo">
+                    <xsl:if test="mods:place/mods:placeTerm[@type=text]">
+                        <field name="origin_place">
+                            <xsl:value-of select="text()" />
+                        </field>
+                    </xsl:if>
+                    <xsl:for-each select="mods:publisher">
+                        <field name="origin_publisher"></field>
+                    </xsl:for-each>
+                </xsl:for-each>
+
                 <xsl:for-each select=".//mods:typeOfResource">
                     <field name="type">
                         <xsl:value-of select="text()" />
