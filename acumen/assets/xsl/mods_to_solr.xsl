@@ -121,16 +121,29 @@
                     </field>
                 </xsl:for-each>
 
-                <xsl:for-each select=".//mods:extension/facet:date_f[@point='start']">
-                    <field name="date">
-                        <xsl:value-of select="text()" />
-                    </field>
-                </xsl:for-each>
+                <xsl:for-each select=".//mods:extension/facet:date_f">
+                    <xsl:variable name="point">
+                        <xsl:choose>
+                            <xsl:when test="@point">_<xsl:value-of select="@point"></xsl:value-of></xsl:when>
+                            <xsl:otherwise></xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:variable>
 
-                <xsl:for-each select=".//mods:extension/facet:date_f[@point='end']">
-                    <field name="date">
+                    <field name="date{$point}_tsf">
                         <xsl:value-of select="text()" />
                     </field>
+
+                    <xsl:if test="@circa">
+                        <field name="date{$point}_circa">
+                            <xsl:value-of select="@circa" />
+                        </field>
+                    </xsl:if>
+
+                    <xsl:if test="@no">
+                        <field name="date{$point}_no">
+                            <xsl:value-of select="@no" />
+                        </field>
+                    </xsl:if>
                 </xsl:for-each>
 
                 <xsl:for-each select=".//mods:typeOfResource">
